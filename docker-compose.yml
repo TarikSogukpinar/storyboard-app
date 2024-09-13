@@ -25,6 +25,17 @@ services:
     environment:
       DATABASE_URL: postgres://postgres:your_password@db:5435/your_database
       POSTGRAPHILE_CORS: "true"  # Enable CORS
+    command: [
+      "--cors",
+      "--enhance-graphiql",
+      "--allow-explain",
+      "--append-plugins", "@graphile-contrib/pg-simplify-inflector",
+      "--enable-query-batching",
+      "--legacy-relations", "omit",
+      "--schema", "public",
+      "--host", "0.0.0.0",
+      "--port", "8090"
+    ]
     ports:
       - "8090:8090"  # GraphQL API portunu expose eder
     networks:
