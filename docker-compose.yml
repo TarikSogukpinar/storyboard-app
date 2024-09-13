@@ -6,28 +6,40 @@ services:
     restart: always
     image: postgres:16  # PostgreSQL image
     volumes:
-      - ./db/data:/var/lib/postgresql/data  # Data persistence
+      - ./db/data:/var/lib/postgresql/data  # Veritabanı verilerini saklamak için
     environment:
-      POSTGRES_USER: postgres               # Hardcoded user
-      POSTGRES_PASSWORD: your_password      # Hardcoded password
-      POSTGRES_DB: your_database            # Hardcoded database name
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: your_password
+      POSTGRES_DB: your_database
     ports:
-      - "5432:5432"                         # Expose PostgreSQL port
+      - "5435:5435"  # PostgreSQL portunu expose eder
     networks:
       - psql-pgql
 
   graphql:
     container_name: pgql
     restart: always
-    image: graphile/postgraphile  # GraphQL API
+    image: graphile/postgraphile  # PostGraphile imajı
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgres://postgres:your_password@db:5432/your_database
+      DATABASE_URL: postgres://postgres:your_password@db:5435/your_database
+      POSTGRAPHILE_CORS: "true"  # Enable CORS
     ports:
-      - "5000:5000"                         # Expose GraphQL port
+      - "8090:8090"  # GraphQL API portunu expose eder
     networks:
       - psql-pgql
+
+  sveltekit:
+    container_name: sveltekit
+    build:
+      context: .  # SvelteKit uygulaması bu dizinde
+    ports:
+      - "4173:4173"  # SvelteKit portu
+    networks:
+      - psql-pgql
+    depends_on:
+      - graphql
 
 networks:
   psql-pgql:

@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 # Step 7: Expose the port that the SvelteKit app will run on
-EXPOSE 3000
+EXPOSE 4173
 
 # Step 8: Command to run the application
-CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "preview", "--", "--host"]

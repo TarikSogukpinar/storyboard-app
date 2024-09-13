@@ -15,6 +15,7 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"autoprefixer": "^10.4.20",
+		"http-proxy-middleware": "^3.0.2",
 		"postcss": "^8.4.45",
 		"svelte": "^4.2.7",
 		"svelte-check": "^4.0.0",
@@ -24,7 +25,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@apollo/client": "^3.11.8",
 		"@urql/svelte": "^4.2.1",
-		"graphql": "^16.9.0"
+		"graphql": "^16.9.0",
+		"graphql-request": "^7.1.0"
 	}
 }
