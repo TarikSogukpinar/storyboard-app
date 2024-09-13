@@ -2,6 +2,6 @@
 <script>
     import '../app.css';  // TailwindCSS dosyasını buradan dahil ediyoruz
 </script>
-<main class="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
+<main class="min-h-screen bg-gradient-to-r from-indigo-950 to-indigo-950 p-8 flex flex-col items-center justify-center">
     <slot />
 </main>
