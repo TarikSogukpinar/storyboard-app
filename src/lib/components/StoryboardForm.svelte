@@ -27,7 +27,7 @@
                 }
             };
 
-            const response = await fetch('/graphql', {
+            const response = await fetch('http://78.111.111.77:8090/graphql', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
