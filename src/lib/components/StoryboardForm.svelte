@@ -1,11 +1,12 @@
 <script lang="ts">
-    import { CREATE_STORYBOARD, UPDATE_STORYBOARD } from '$lib/graphql/mutations';
+    import {CREATE_STORYBOARD, UPDATE_STORYBOARD} from '$lib/graphql/mutations';
+
     export let isEditMode = false;
     export let id: string | null = null;
     export let initialTitle = '';
     export let initialDescription = '';
-    export let initialStatus = 'draft'; // Status için varsayılan değer
-    export let initialTags = ''; // Tags için varsayılan değer (virgülle ayrılmış)
+    export let initialStatus = 'draft';
+    export let initialTags = '';
 
     let title = initialTitle;
     let description = initialDescription;
@@ -17,13 +18,12 @@
         try {
             const query = isEditMode ? UPDATE_STORYBOARD : CREATE_STORYBOARD;
 
-            // Storyboard inputu için gerekli değişkenler
             const variables = {
                 storyboard: {
                     title,
                     description,
                     status,
-                    tags: tags.split(',').map(tag => tag.trim()) // Virgülle ayrılmış etiketler
+                    tags: tags.split(',').map(tag => tag.trim())
                 }
             };
 
@@ -34,16 +34,15 @@
                 },
                 body: JSON.stringify({
                     query,
-                    variables, // Burada doğru yapıyı geçiyoruz
+                    variables,
                 }),
             });
 
-            if (!response.ok) throw new Error('Form gönderilemedi');
+            if (!response.ok) throw new Error('Form dont send!');
 
             const result = await response.json();
             if (result.errors) throw new Error(result.errors[0].message);
-
-            // Başarılıysa yönlendirme yap
+            
             window.location.href = '/';
         } catch (err: any) {
             console.error(err);
@@ -52,33 +51,35 @@
     }
 </script>
 
-<form on:submit|preventDefault={submitForm} class="space-y-4">
+<!-- Form -->
+<form on:submit|preventDefault={submitForm} class="space-y-6 max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg">
     <div>
-        <label for="title" class="block text-lg font-bold">Title</label>
+        <label for="title" class="block text-lg font-semibold mb-2">Title</label>
         <input
                 id="title"
                 type="text"
                 bind:value={title}
-                class="w-full p-2 mt-2 border border-gray-200 rounded"
+                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
                 placeholder="Enter storyboard title"
                 required
         />
     </div>
 
     <div>
-        <label for="description" class="block text-lg font-bold">Description</label>
+        <label for="description" class="block text-lg font-semibold mb-2">Description</label>
         <textarea
                 id="description"
                 bind:value={description}
-                class="w-full p-2 mt-2 border border-gray-200 rounded"
+                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
                 placeholder="Enter storyboard description"
                 required
         ></textarea>
     </div>
 
     <div>
-        <label for="status" class="block text-lg font-bold">Status</label>
-        <select id="status" bind:value={status} class="w-full p-2 mt-2 border border-gray-200 rounded">
+        <label for="status" class="block text-lg font-semibold mb-2">Status</label>
+        <select id="status" bind:value={status}
+                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200">
             <option value="draft">Draft</option>
             <option value="published">Published</option>
             <option value="archived">Archived</option>
@@ -86,21 +87,21 @@
     </div>
 
     <div>
-        <label for="tags" class="block text-lg font-bold">Tags</label>
+        <label for="tags" class="block text-lg font-semibold mb-2">Tags</label>
         <input
                 id="tags"
                 type="text"
                 bind:value={tags}
-                class="w-full p-2 mt-2 border border-gray-200 rounded"
+                class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
                 placeholder="Enter comma-separated tags"
         />
     </div>
 
-    <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition-colors duration-300">
-        {isEditMode ? 'Update' : 'Create'}
+    <button class="w-full bg-gray-950 text-white py-3 rounded-md hover:bg-green-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md transition-colors duration-200">
+        Create
     </button>
 
     {#if error}
-        <p class="text-red-500">{error}</p>
+        <p class="text-red-500 mt-4">{error}</p>
     {/if}
 </form>

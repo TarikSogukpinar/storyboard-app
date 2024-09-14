@@ -1,10 +1,11 @@
 <script lang="ts">
     import StoryboardForm from "$lib/components/StoryboardForm.svelte";
-    export let data; // Data'yı dışarıdan alıyoruz
+
+    export let data;
 </script>
 
 <section class="container mx-auto py-8">
-    <h1 class="text-3xl font-bold mb-4 bg-amber-100">
+    <h1 class="flex justify-center items-center text-3xl font-bold mb-5 text-white  ">
         {data?.storyboard ? 'Edit Storyboard' : 'Create Storyboard'}
     </h1>
 

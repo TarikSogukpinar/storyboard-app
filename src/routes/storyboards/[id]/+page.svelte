@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { GET_STORYBOARD } from '$lib/graphql/queries';
-    import { UPDATE_STORYBOARD } from '$lib/graphql/mutations';
+    import {onMount} from 'svelte';
+    import {GET_STORYBOARD} from '$lib/graphql/queries';
+    import {UPDATE_STORYBOARD} from '$lib/graphql/mutations';
+
     let id: number;
     let title = '';
     let description = '';
     let errorMessage = '';
 
-    // Storyboard detaylarını almak için GraphQL sorgusu
     async function loadStoryboard(id: number) {
         try {
             const response = await fetch('http://78.111.111.77:8090/graphql', {
@@ -17,7 +17,7 @@
                 },
                 body: JSON.stringify({
                     query: GET_STORYBOARD,
-                    variables: { id }
+                    variables: {id}
                 }),
             });
 
@@ -30,12 +30,11 @@
             const storyboard = result.data.storyboard;
             title = storyboard.title;
             description = storyboard.description;
-        } catch (error) {
+        } catch (error: any) {
             errorMessage = 'Failed to load storyboard: ' + error.message;
         }
     }
 
-    // Güncelleme işlemi
     async function updateStoryboard() {
         try {
             const response = await fetch('http://78.111.111.77:8090/graphql', {
@@ -47,8 +46,8 @@
                     query: UPDATE_STORYBOARD,
                     variables: {
                         input: {
-                            id,   // ID'yi göndermeye devam ediyoruz
-                            patch: { // patch içinde güncellenen alanlar olmalı
+                            id,
+                            patch: {
                                 title,
                                 description
                             }
@@ -63,57 +62,55 @@
                 throw new Error(result.errors[0].message);
             }
 
-            // Başarılı güncelleme sonrasında ana sayfaya yönlendirin
             window.location.href = '/';
-        } catch (error) {
+        } catch (error: any) {
             errorMessage = 'Failed to update storyboard: ' + error.message;
         }
     }
 
-    // Sayfa yüklendiğinde storyboard detaylarını almak için
     onMount(() => {
         const params = window.location.pathname.split('/');
-        id = parseInt(params[params.length - 1], 10);  // ID'yi tam sayıya çeviriyoruz
+        id = parseInt(params[params.length - 1], 10);
         if (!isNaN(id)) {
-            loadStoryboard(id);  // ID geçerli bir sayıysa storyboard'u yükleyin
+            loadStoryboard(id);
         } else {
             errorMessage = 'Invalid storyboard ID';
         }
     });
 </script>
 
-<!-- Güncelleme Formu -->
 <section class="container mx-auto py-10">
-    <h1 class="text-3xl font-bold mb-6 text-center">Storyboard Güncelle</h1>
+    <h1 class="text-3xl font-bold mb-6 text-center text-white">Update Storyboard</h1>
 
     {#if errorMessage}
         <p class="text-red-500">{errorMessage}</p>
     {/if}
 
-    <form on:submit|preventDefault={updateStoryboard} class="max-w-lg mx-auto space-y-4">
+    <form on:submit|preventDefault={updateStoryboard}
+          class="max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg space-y-6">
         <div>
-            <label for="title" class="block text-lg font-bold">Başlık</label>
+            <label for="title" class="block text-lg font-semibold mb-2">Title</label>
             <input
                     id="title"
                     type="text"
                     bind:value={title}
-                    class="w-full p-2 mt-2 border border-gray-200 rounded"
+                    class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
                     required
             />
         </div>
 
         <div>
-            <label for="description" class="block text-lg font-bold">Açıklama</label>
+            <label for="description" class="block text-lg font-semibold mb-2">Description</label>
             <textarea
                     id="description"
                     bind:value={description}
-                    class="w-full p-2 mt-2 border border-gray-200 rounded"
+                    class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-200"
                     required
             ></textarea>
         </div>
 
-        <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-500 transition-colors duration-300">
-            Güncelle
+        <button class="w-full bg-gray-950 text-white py-3 rounded-md hover:bg-green-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md transition-colors duration-200">
+            Update
         </button>
     </form>
 </section>

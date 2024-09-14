@@ -12,7 +12,6 @@ export async function load({ fetch }) {
 
     const result = await response.json();
 
-    // Hata kontrolü
     if (result.errors) {
         console.error("GraphQL Errors:", result.errors);
         throw new Error(result.errors[0].message);
