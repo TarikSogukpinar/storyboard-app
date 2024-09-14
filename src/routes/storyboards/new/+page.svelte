@@ -9,7 +9,6 @@
         {data?.storyboard ? 'Edit Storyboard' : 'Create Storyboard'}
     </h1>
 
-    <!-- Form bileşenini çağırma -->
     <StoryboardForm
             isEditMode={data?.storyboard ? true : false}
             id={data?.storyboard?.id ?? null}

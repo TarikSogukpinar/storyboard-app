@@ -2,13 +2,33 @@
     import {DELETE_STORYBOARD} from '$lib/graphql/mutations';
     import {onMount} from 'svelte';
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     let loading = true;
-    export let storyboards: { id: number; title: string; description: string }[] = [];
+    export let storyboards: {
+        id: number;
+        title: string;
+        description: string,
+        createdAt: string,
+        updatedAt: string
+    }[] = [];
 
     import {createEventDispatcher} from 'svelte';
 
     const dispatch = createEventDispatcher();
     let errorMessage = '';
+
+    function formatDate(dateString: string) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+    }
+
 
     onMount(async () => {
         try {
@@ -23,7 +43,7 @@
 
     async function handleDelete(id: number) {
         try {
-            const response = await fetch('http://78.111.111.77:8090/graphql', {
+            const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -61,9 +81,11 @@
 {#if !loading && storyboards.length > 0}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 rounded-3xl text-white">
         {#each storyboards as storyboard (storyboard.id)}
-            <div class="bg-white border border-gray-200 rounded-lg shadow-xl p-6 hover:shadow-xl transition-shadow duration-300">
-                <h2 class="text-2xl font-semibold text-blue-600 mb-2">{storyboard.title}</h2>
-                <p class="text-gray-700 mb-4">{storyboard.description}</p>
+            <div class="bg-white rounded-2xl p-6 hover:shadow-3xl transition-shadow duration-300">
+                <h2 class="text-2xl font-semibold text-gray-950 mb-2">Title : {storyboard.title}</h2>
+                <p class="text-gray-950 mb-4 font-bold">Desc: {storyboard.description}</p>
+                <p class="text-gray-950 mb-4 font-bold">Created Date: {formatDate(storyboard.createdAt)}</p>
+                <p class="text-gray-950 mb-4 font-bold">Updated Date: {formatDate(storyboard.updatedAt)}</p>
                 <div class="flex justify-between items-center">
                     <button on:click={() => handleDelete(storyboard.id)}
                             class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500 transition duration-300">

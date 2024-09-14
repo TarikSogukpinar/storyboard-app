@@ -5,6 +5,8 @@ export const GET_ALL_STORYBOARDS = `
         id
         title
         description
+        createdAt
+        updatedAt
       }
     }
   }

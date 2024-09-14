@@ -7,10 +7,12 @@
     let title = '';
     let description = '';
     let errorMessage = '';
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     async function loadStoryboard(id: number) {
+
         try {
-            const response = await fetch('http://78.111.111.77:8090/graphql', {
+            const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +39,7 @@
 
     async function updateStoryboard() {
         try {
-            const response = await fetch('http://78.111.111.77:8090/graphql', {
+            const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

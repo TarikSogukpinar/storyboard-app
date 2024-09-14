@@ -14,6 +14,8 @@
     let tags = initialTags;
     let error: string | null = null;
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     async function submitForm() {
         try {
             const query = isEditMode ? UPDATE_STORYBOARD : CREATE_STORYBOARD;
@@ -27,7 +29,7 @@
                 }
             };
 
-            const response = await fetch('http://78.111.111.77:8090/graphql', {
+            const response = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,7 +44,7 @@
 
             const result = await response.json();
             if (result.errors) throw new Error(result.errors[0].message);
-            
+
             window.location.href = '/';
         } catch (err: any) {
             console.error(err);

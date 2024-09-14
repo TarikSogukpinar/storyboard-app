@@ -2,7 +2,9 @@ import { GET_ALL_STORYBOARDS } from "$lib/graphql/queries";
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ fetch }) {
-    const response = await fetch('http://78.111.111.77:8090/graphql', {
+    const apiUrl = import.meta.env.VITE_API_URL;
+
+    const response = await fetch(`${apiUrl}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
