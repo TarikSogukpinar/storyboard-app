@@ -11,7 +11,7 @@ export const GET_ALL_STORYBOARDS = `
 `;
 
 export const GET_STORYBOARD = `
-  query($id: ID!) {
+  query($id: Int!) {
     storyboard(id: $id) {
       id
       title

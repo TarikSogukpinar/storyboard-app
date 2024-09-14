@@ -13,15 +13,15 @@ export const CREATE_STORYBOARD = `
 `;
 
 export const UPDATE_STORYBOARD = `
-  mutation($id: ID!, $title: String!, $description: String!) {
-    updateStoryboard(id: $id, input: { title: $title, description: $description }) {
-      storyboard {
-        id
-        title
-        description
-      }
+ mutation UpdateStoryboard($input: UpdateStoryboardInput!) {
+  updateStoryboard(input: $input) {
+    storyboard {
+      id
+      title
+      description
     }
   }
+}
 `;
 
 export const DELETE_STORYBOARD = `
