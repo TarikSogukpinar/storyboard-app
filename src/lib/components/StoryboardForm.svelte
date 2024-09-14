@@ -1,8 +1,9 @@
 <script lang="ts">
-    import {CREATE_STORYBOARD, UPDATE_STORYBOARD} from '$lib/graphql/mutations';
+    import {CREATE_STORYBOARD} from '$lib/graphql/mutations';
+    import {storyBoardFormSchemaValidation} from "../validation/storyBoardFormSchemaValidation"
+    import {UPDATE_STORYBOARD} from "$lib/graphql/mutations";
 
     export let isEditMode = false;
-    export let id: string | null = null;
     export let initialTitle = '';
     export let initialDescription = '';
     export let initialStatus = 'draft';
@@ -13,11 +14,24 @@
     let status = initialStatus;
     let tags = initialTags;
     let error: string | null = null;
+    let validationErrors: { [key: string]: string } = {};
+    const apiUrl = import.meta.env.VITE_API_URL;
+
 
     async function submitForm() {
+        const formData = {title, description, status, tags};
+        const {error} = storyBoardFormSchemaValidation.validate(formData, {abortEarly: false});
+
+        if (error) {
+            validationErrors = {};
+            error.details.forEach(detail => {
+                validationErrors[detail.path[0] as string] = detail.message;
+            });
+            return;
+        }
+
         try {
             const query = isEditMode ? UPDATE_STORYBOARD : CREATE_STORYBOARD;
-
             const variables = {
                 storyboard: {
                     title,
@@ -27,7 +41,7 @@
                 }
             };
 
-            const response = await fetch('http://78.111.111.77:8090/graphql', {
+            const createStoryboardFormResponse = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -38,18 +52,30 @@
                 }),
             });
 
-            if (!response.ok) throw new Error('Form dont send!');
+            if (!createStoryboardFormResponse.ok) throw new Error('Form could not be sent');
 
-            const result = await response.json();
+            const result = await createStoryboardFormResponse.json();
             if (result.errors) throw new Error(result.errors[0].message);
-            
+
             window.location.href = '/';
-        } catch (err: any) {
-            console.error(err);
-            error = err.message;
+        } catch (error: any) {
+            console.error('Submit form failed', error);
+            error = error.message;
         }
     }
+
 </script>
+
+{#if Object.keys(validationErrors).length > 0}
+    <div class="mb-5 bg-red-400  text-gray-950 px-4 py-5 pb-10 rounded relative" role="alert">
+        <strong class="font-bold">Validation Error!</strong>
+        <ul class="mt-2">
+            {#each Object.entries(validationErrors) as [field, message]}
+                <li class="block sm:inline m-1">{message}</li>
+            {/each}
+        </ul>
+    </div>
+{/if}
 
 <!-- Form -->
 <form on:submit|preventDefault={submitForm} class="space-y-6 max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg">
@@ -98,7 +124,7 @@
     </div>
 
     <button class="w-full bg-gray-950 text-white py-3 rounded-md hover:bg-green-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 shadow-md transition-colors duration-200">
-        Create
+        {isEditMode ? 'Update' : 'Create'}
     </button>
 
     {#if error}

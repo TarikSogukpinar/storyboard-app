@@ -1,16 +1,20 @@
 <script lang="ts">
     import {onMount} from 'svelte';
     import {GET_STORYBOARD} from '$lib/graphql/queries';
-    import {UPDATE_STORYBOARD} from '$lib/graphql/mutations';
+    import {UPDATE_STORYBOARD} from "$lib/graphql/mutations";
+    import {updateStoryBoardFormSchemaValidation} from "$lib/validation/updateStoryBoardFormSchemaValidation"
 
     let id: number;
     let title = '';
     let description = '';
     let errorMessage = '';
+    let validationErrors: { [key: string]: string } = {};
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     async function loadStoryboard(id: number) {
+
         try {
-            const response = await fetch('http://78.111.111.77:8090/graphql', {
+            const loadStoryboardResponse = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -21,10 +25,10 @@
                 }),
             });
 
-            const result = await response.json();
+            const result = await loadStoryboardResponse.json();
 
             if (result.errors) {
-                throw new Error(result.errors[0].message);
+                throw new Error('Something went wrong');
             }
 
             const storyboard = result.data.storyboard;
@@ -32,12 +36,24 @@
             description = storyboard.description;
         } catch (error: any) {
             errorMessage = 'Failed to load storyboard: ' + error.message;
+            console.error('Error loading storyboard:', error);
         }
     }
 
     async function updateStoryboard() {
+        const formData = {title, description};
+        const {error} = updateStoryBoardFormSchemaValidation.validate(formData, {abortEarly: false});
+
+        if (error) {
+            validationErrors = {};
+            error.details.forEach(detail => {
+                validationErrors[detail.path[0] as string] = detail.message;
+            });
+            return;
+        }
+
         try {
-            const response = await fetch('http://78.111.111.77:8090/graphql', {
+            const updateStoryboardResponse = await fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +72,7 @@
                 }),
             });
 
-            const result = await response.json();
+            const result = await updateStoryboardResponse.json();
 
             if (result.errors) {
                 throw new Error(result.errors[0].message);
@@ -64,7 +80,8 @@
 
             window.location.href = '/';
         } catch (error: any) {
-            errorMessage = 'Failed to update storyboard: ' + error.message;
+            console.error('Submit form failed', error);
+            error = error.message;
         }
     }
 
@@ -79,12 +96,20 @@
     });
 </script>
 
+{#if Object.keys(validationErrors).length > 0}
+    <div class="mb-5 bg-red-400  text-gray-950 px-4 py-5 pb-10 rounded relative" role="alert">
+        <strong class="font-bold">Validation Error!</strong>
+        <ul class="mt-2">
+            {#each Object.entries(validationErrors) as [field, message]}
+                <li class="block sm:inline m-1">{message}</li>
+            {/each}
+        </ul>
+    </div>
+{/if}
+
 <section class="container mx-auto py-10">
     <h1 class="text-3xl font-bold mb-6 text-center text-white">Update Storyboard</h1>
 
-    {#if errorMessage}
-        <p class="text-red-500">{errorMessage}</p>
-    {/if}
 
     <form on:submit|preventDefault={updateStoryboard}
           class="max-w-lg mx-auto bg-white p-8 shadow-lg rounded-lg space-y-6">

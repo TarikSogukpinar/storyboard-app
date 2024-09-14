@@ -6,7 +6,7 @@
 
     function handleDeleteStoryboard(event: CustomEvent) {
         const {id} = event.detail;
-        storyboards = storyboards.filter(storyboard => storyboard.id !== id); // Silinen storyboard'u listeden çıkar
+        storyboards = storyboards.filter(storyboard => storyboard.id !== id);
     }
 </script>
 

@@ -12,6 +12,16 @@ export const CREATE_STORYBOARD = `
 }
 `;
 
+export const DELETE_STORYBOARD = `
+ mutation DeleteStoryboard($input: DeleteStoryboardInput!) {
+  deleteStoryboard(input: $input) {
+    storyboard {
+      id
+    }
+  }
+}
+`;
+
 export const UPDATE_STORYBOARD = `
  mutation UpdateStoryboard($input: UpdateStoryboardInput!) {
   updateStoryboard(input: $input) {
@@ -19,16 +29,6 @@ export const UPDATE_STORYBOARD = `
       id
       title
       description
-    }
-  }
-}
-`;
-
-export const DELETE_STORYBOARD = `
- mutation DeleteStoryboard($input: DeleteStoryboardInput!) {
-  deleteStoryboard(input: $input) {
-    storyboard {
-      id
     }
   }
 }

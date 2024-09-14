@@ -5,6 +5,8 @@ export const GET_ALL_STORYBOARDS = `
         id
         title
         description
+        createdAt
+        updatedAt
       }
     }
   }
@@ -18,4 +20,20 @@ export const GET_STORYBOARD = `
       description
     }
   }
+`;
+
+
+export const TOTAL_COUNT = `
+                    query {
+                      storyboards {
+                        totalCount
+                        nodes {
+                          id
+                          title
+                          description
+                          createdAt
+                          updatedAt
+                        }
+                      }
+                    }
 `;
