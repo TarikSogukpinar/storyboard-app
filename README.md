@@ -33,7 +33,7 @@ Local Host: http://78.111.111.77:5173/
 #### Get All Story Boards
 
 ```http
-  export const GET_ALL_STORYBOARDS = `
+  export const GET_ALL_STORYBOARDS = 
   query {
     storyboards {
       nodes {
@@ -45,7 +45,7 @@ Local Host: http://78.111.111.77:5173/
       }
     }
   }
-`;
+
 ```
 
 | Parametre | Tip     | Açıklama                |
