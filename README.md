@@ -28,7 +28,7 @@ Run project
 
 Live Demo: http://78.111.111.77:4173/
 
-Local Host: http://localhost:5173/
+Local Host: http://78.111.111.77:5173/
   
 # Svelte & GraphQL Storyboard CRUD API
 
@@ -167,8 +167,15 @@ Local Host: http://localhost:5173/
 | `tags` | `String!` 
 
 
-## Ekler
+## Links
 
-Herhangi bir ek bilgi buraya gelir
+https://github.com/TarikSogukpinar/storyboard-app
+
+https://hub.docker.com/repository/docker/ledun/storyboard-app/general
+
+https://www.graphile.org/postgraphile/
+
+https://graphql.org/
+
 
   
