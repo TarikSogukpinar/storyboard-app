@@ -3,7 +3,7 @@
   
 ## Installation
 
-Bu projeyi dağıtmak için çalıştırın
+Run project
 
 ```bash
   npm install
@@ -18,6 +18,12 @@ Bu projeyi dağıtmak için çalıştırın
   docker-compose up -d
 ```
 
+## Env file
+
+`VITE_API_URL = your_api_url`
+
+
+  
 ## Demo
 
 Live Demo: http://78.111.111.77:4173/
@@ -33,7 +39,7 @@ Local Host: http://78.111.111.77:5173/
 #### Get All Story Boards
 
 ```http
-  export const GET_ALL_STORYBOARDS = 
+  export const GET_ALL_STORYBOARDS = `
   query {
     storyboards {
       nodes {
@@ -45,16 +51,16 @@ Local Host: http://78.111.111.77:5173/
       }
     }
   }
-
+`;
 ```
 
-| Parametre | Tip     | Açıklama                |
-| :-------- | :------- | :------------------------- |
-| `id` | `ID!` | **Gerekli**. API anahtarınız. |
-| `title` | `String` | **Gerekli**. API anahtarınız. |
-| `description` | `String` | **Gerekli**. API anahtarınız. |
-| `status` | `String` | **Gerekli**. API anahtarınız. |
-| `tags` | `String` | **Gerekli**. API anahtarınız. |
+| Parametre | Tip     |
+| :-------- | :------- |
+| `id` | `ID!` 
+| `title` | `String` 
+| `description` | `String` 
+| `status` | `String` 
+| `tags` | `String` 
 
 #### Get Story Board
 
@@ -69,9 +75,9 @@ Local Host: http://78.111.111.77:5173/
 `;
 ```
 
-| Parametre | Tip     | Açıklama                |
-| :-------- | :------- | :------------------------- |
-| `id` | `ID!` | **Gerekli**. API anahtarınız. |
+| Parametre | Tip     |
+| :-------- | :------- |
+| `id` | `ID!` |
 
 
 #### Total Count
@@ -109,13 +115,13 @@ Local Host: http://78.111.111.77:5173/
 `;
 ```
 
-| Parametre | Tip     | Açıklama                |
-| :-------- | :------- | :------------------------- |
-| `id` | `ID!` | **Gerekli**. API anahtarınız. |
-| `title` | `String!` | **Gerekli**. API anahtarınız. |
-| `description` | `String!` | **Gerekli**. API anahtarınız. |
-| `status` | `String!` | **Gerekli**. API anahtarınız. |
-| `tags` | `String!` | **Gerekli**. API anahtarınız. |
+| Parametre | Tip     |
+| :-------- | :------- | 
+| `id` | `ID!` 
+| `title` | `String!` 
+| `description` | `String!` 
+| `status` | `String!` 
+| `tags` | `String!` 
 
 
 #### Delete Story Board
@@ -131,9 +137,9 @@ Local Host: http://78.111.111.77:5173/
 `;
 ```
 
-| Parametre | Tip     | Açıklama                |
-| :-------- | :------- | :------------------------- |
-| `id` | `ID!` | **Gerekli**. API anahtarınız. |
+| Parametre | Tip     |
+| :-------- | :------- |
+| `id` | `ID!` 
 
 
   
@@ -152,13 +158,13 @@ Local Host: http://78.111.111.77:5173/
 `;
 ```
 
-| Parametre | Tip     | Açıklama                |
-| :-------- | :------- | :------------------------- |
-| `id` | `ID!` | **Gerekli**. API anahtarınız. |
-| `title` | `String!` | **Gerekli**. API anahtarınız. |
-| `description` | `String!` | **Gerekli**. API anahtarınız. |
-| `status` | `String!` | **Gerekli**. API anahtarınız. |
-| `tags` | `String!` | **Gerekli**. API anahtarınız. |
+| Parametre | Tip     |
+| :-------- | :------- | 
+| `id` | `ID!`  
+| `title` | `String!`  
+| `description` | `String!` 
+| `status` | `String!` 
+| `tags` | `String!` 
 
 
 ## Ekler
