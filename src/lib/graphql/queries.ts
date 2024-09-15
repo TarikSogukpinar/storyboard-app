@@ -24,16 +24,16 @@ export const GET_STORYBOARD = `
 
 
 export const TOTAL_COUNT = `
-                    query {
-                      storyboards {
-                        totalCount
-                        nodes {
-                          id
-                          title
-                          description
-                          createdAt
-                          updatedAt
-                        }
-                      }
-                    }
+ query {
+  storyboards {
+    totalCount
+    nodes {
+      id
+      title
+      description
+      createdAt
+      updatedAt
+    }
+  }
+}
 `;
