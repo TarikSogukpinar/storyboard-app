@@ -1,18 +1,23 @@
-
-## Ekran Görüntüleri
-
 ![Uygulama Ekran Görüntüsü](https://i.ibb.co/52r9yxJ/og-image-lg.jpg)
 
   
-## Dağıtım
+## Installation
 
 Bu projeyi dağıtmak için çalıştırın
 
 ```bash
-  npm run deploy
+  npm install
+
+  npm run dev
+```
+## Docker
+
+  ```bash
+  docker build -t ledun/storyboard-app:latest
+  docker push ledun/storyboard-app:latest
+  docker-compose up -d
 ```
 
-  
 ## Demo
 
 Live Demo: http://78.111.111.77:4173/
@@ -154,6 +159,8 @@ Local Host: http://78.111.111.77:5173/
 | `description` | `String!` | **Gerekli**. API anahtarınız. |
 | `status` | `String!` | **Gerekli**. API anahtarınız. |
 | `tags` | `String!` | **Gerekli**. API anahtarınız. |
+
+
 ## Ekler
 
 Herhangi bir ek bilgi buraya gelir
