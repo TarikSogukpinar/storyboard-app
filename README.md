@@ -1,38 +1,161 @@
-# create-svelte
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## Ekran Görüntüleri
 
-## Creating a project
+![Uygulama Ekran Görüntüsü](https://i.ibb.co/52r9yxJ/og-image-lg.jpg)
 
-If you're seeing this, you've probably already done this step. Congrats!
+  
+## Dağıtım
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Bu projeyi dağıtmak için çalıştırın
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+  npm run deploy
 ```
 
-## Building
+  
+## Demo
 
-To create a production version of your app:
+Live Demo: http://78.111.111.77:4173/
 
-```bash
-npm run build
+Local Host: http://78.111.111.77:5173/
+  
+# Svelte & GraphQL Storyboard CRUD API
+
+
+
+## API Usage
+
+#### Get All Story Boards
+
+```http
+  export const GET_ALL_STORYBOARDS = `
+  query {
+    storyboards {
+      nodes {
+        id
+        title
+        description
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 ```
 
-You can preview the production build with `npm run preview`.
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `id` | `ID!` | **Gerekli**. API anahtarınız. |
+| `title` | `String` | **Gerekli**. API anahtarınız. |
+| `description` | `String` | **Gerekli**. API anahtarınız. |
+| `status` | `String` | **Gerekli**. API anahtarınız. |
+| `tags` | `String` | **Gerekli**. API anahtarınız. |
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+#### Get Story Board
+
+```http
+  query($id: Int!) {
+    storyboard(id: $id) {
+      id
+      title
+      description
+    }
+  }
+`;
+```
+
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `id` | `ID!` | **Gerekli**. API anahtarınız. |
+
+
+#### Total Count
+
+```http
+   query {
+  storyboards {
+    totalCount
+    nodes {
+      id
+      title
+      description
+      createdAt
+      updatedAt
+    }
+  }
+}
+`;
+```
+
+#### Create Story Board
+
+```http
+   mutation CreateStoryboard($storyboard: StoryboardInput!) {
+  createStoryboard(input: { storyboard: $storyboard }) {
+    storyboard {
+      id
+      title
+      description
+      status
+      tags
+    }
+  }
+}
+`;
+```
+
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `id` | `ID!` | **Gerekli**. API anahtarınız. |
+| `title` | `String!` | **Gerekli**. API anahtarınız. |
+| `description` | `String!` | **Gerekli**. API anahtarınız. |
+| `status` | `String!` | **Gerekli**. API anahtarınız. |
+| `tags` | `String!` | **Gerekli**. API anahtarınız. |
+
+
+#### Delete Story Board
+
+```http
+  mutation DeleteStoryboard($input: DeleteStoryboardInput!) {
+  deleteStoryboard(input: $input) {
+    storyboard {
+      id
+    }
+  }
+}
+`;
+```
+
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `id` | `ID!` | **Gerekli**. API anahtarınız. |
+
+
+  
+#### Update Story Board
+
+```http
+ mutation UpdateStoryboard($input: UpdateStoryboardInput!) {
+  updateStoryboard(input: $input) {
+    storyboard {
+      id
+      title
+      description
+    }
+  }
+}
+`;
+```
+
+| Parametre | Tip     | Açıklama                |
+| :-------- | :------- | :------------------------- |
+| `id` | `ID!` | **Gerekli**. API anahtarınız. |
+| `title` | `String!` | **Gerekli**. API anahtarınız. |
+| `description` | `String!` | **Gerekli**. API anahtarınız. |
+| `status` | `String!` | **Gerekli**. API anahtarınız. |
+| `tags` | `String!` | **Gerekli**. API anahtarınız. |
+## Ekler
+
+Herhangi bir ek bilgi buraya gelir
+
+  
