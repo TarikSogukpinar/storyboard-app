@@ -28,7 +28,7 @@ Run project
 
 Live Demo: http://78.111.111.77:4173/
 
-Local Host: http://78.111.111.77:5173/
+Local Host: http://localhost:5173/
   
 # Svelte & GraphQL Storyboard CRUD API
 
